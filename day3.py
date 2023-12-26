@@ -5,14 +5,15 @@ Done -castabout for digits in ajacent cells
 Done -identify the number those digits are from
         would be easier to find numbers the check they are valid by using the castabout to find symbols
 Done -sum the valid part numbers
-TODO -fix getting part numbers you have already (but allowing genuine duplicate parts elsewhere)
+Done -fix getting part numbers you have already (but allowing genuine duplicate parts elsewhere)
+
+Result 528819 Time taken:45.51 ms
 """
 import numpy as np
 import time
 
 start = time.time()
 matrix = np.fromfile("day3-input.txt", dtype="S1").reshape(140, 141)
-# valid_symbols = "!@#$%^&*()_-+={}[]"
 valid_symbols = "#%&*+-/=@$"
 valid_parts = []
 
@@ -64,12 +65,11 @@ for ix, iy in np.ndindex(matrix.shape):
     if val in valid_symbols:
         print(f"{val} - [{ix=}, {iy=}]")
         surround = castabout(ix, iy)
-        # print(f"{surround}") #list of bounding coords
+        numstart, numend = 0,0
         for cords in surround:
             point = matrix[cords[0], cords[1]].decode("UTF-8")
-            if point.isnumeric():
-                # print(f"{point} - [{cords[0],cords[1]}]")
-                # scan(cords[0],traverse(cords[0], cords[1]))
+            if cords[0] == ix: numend=numstart # prevent range overlap carry over to bottom row
+            if point.isnumeric() and cords[1] not in range(numstart,numend):
                 numstart = traverse(cords[0], cords[1])
                 numend = scan(cords[0], numstart)
                 partrange = matrix[cords[0], numstart:numend]
