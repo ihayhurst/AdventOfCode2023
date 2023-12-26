@@ -1,9 +1,10 @@
 """
-load matrix into numpy array
-scan array for symbols,
-castabout for digits in ajacent cells
-identify the number those digits are from
-sum the valid part numbers
+Done -load matrix into numpy array
+Done -scan array for symbols,
+Done -castabout for digits in ajacent cells
+TODO -identify the number those digits are from
+        would be easier to find numbers the check they are valid by using the castabout to find symbols
+TODO -sum the valid part numbers
 """
 import numpy as np
 import time
@@ -33,9 +34,8 @@ for ix, iy in np.ndindex(matrix.shape):
    if val in valid_symbols:
     print(f"{val} - [{ix=}, {iy=}]") 
     surround= castabout(ix,iy)
-    print(f"{surround}")
+    print(f"{surround}") #list of bounding coords
     for cords in surround:
-       #print((matrix[cords[0],cords[1]].decode('UTF-8')))
        point=(matrix[cords[0],cords[1]].decode('UTF-8'))
        if point.isnumeric():
           print(f"{point} - [{cords[0],cords[1]}]")
