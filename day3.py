@@ -2,9 +2,10 @@
 Done -load matrix into numpy array
 Done -scan array for symbols,
 Done -castabout for digits in ajacent cells
-TODO -identify the number those digits are from
+Done -identify the number those digits are from
         would be easier to find numbers the check they are valid by using the castabout to find symbols
-TODO -sum the valid part numbers
+Done -sum the valid part numbers
+TODO -fix getting part numbers you have already (but allowing genuine duplicate parts elsewhere)
 """
 import numpy as np
 import time
@@ -13,6 +14,7 @@ start = time.time()
 matrix = np.fromfile("day3-input.txt", dtype='S1').reshape(140,141)
 #valid_symbols = "!@#$%^&*()_-+={}[]"
 valid_symbols = "#%&*+-/=@$"
+valid_parts=[]
 
 
 def castabout(ix, iy):
@@ -31,7 +33,7 @@ def castabout(ix, iy):
 
 
 def traverse(x,y):
-    #decrement x until cell is not a digit, increment right until not a digit; return number from digit range
+    # Decrement y until cell value is not a digit (return index of digit range start)
     digit=True
     while digit:
         y-=1
@@ -40,25 +42,46 @@ def traverse(x,y):
         else:
            digit=False
 
-    print(y+1)
     numstart=y+1
     return numstart
+
+
+def scan(x,y):
+    # Increment y until cell value is not a digit (return  index of digit end (+1) for easy ranges)
+    digit=True
+    while digit:
+        y +=1
+        if (matrix[x,y].decode('UTF-8').isnumeric()):
+            digit=True
+        else:
+            digit=False
+    numend=y
+    return numend
+    
 
 for ix, iy in np.ndindex(matrix.shape):
    val=(matrix[ix,iy]).decode('UTF-8')
    if val in valid_symbols:
     print(f"{val} - [{ix=}, {iy=}]") 
     surround= castabout(ix,iy)
-    print(f"{surround}") #list of bounding coords
+    #print(f"{surround}") #list of bounding coords
     for cords in surround:
        point=(matrix[cords[0],cords[1]].decode('UTF-8'))
        if point.isnumeric():
-          print(f"{point} - [{cords[0],cords[1]}]")
-          traverse(cords[0], cords[1])
+          #print(f"{point} - [{cords[0],cords[1]}]")
+          #scan(cords[0],traverse(cords[0], cords[1]))
+          numstart=traverse(cords[0],cords[1])
+          numend=scan(cords[0],numstart)
+          partrange=(matrix[cords[0],numstart:numend])
+          partnumber="".join([d.decode('UTF-8') for d in partrange])
+          print(int(partnumber))
+          valid_parts.append(int(partnumber))
+          
 
 """
 for x in np.nditer(matrix, flags=['buffered'], op_dtypes=['S1']):
      print(x)
 """
+print(sum(valid_parts))
 delta = time.time() - start
 print("task took %.2f ms" % (delta * 1000))
