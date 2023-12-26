@@ -29,6 +29,21 @@ def castabout(ix, iy):
     
     return adj
 
+
+def traverse(x,y):
+    #decrement x until cell is not a digit, increment right until not a digit; return number from digit range
+    digit=True
+    while digit:
+        y-=1
+        if (matrix[x,y].decode('UTF-8')).isnumeric():
+            digit=True
+        else:
+           digit=False
+
+    print(y+1)
+    numstart=y+1
+    return numstart
+
 for ix, iy in np.ndindex(matrix.shape):
    val=(matrix[ix,iy]).decode('UTF-8')
    if val in valid_symbols:
@@ -39,6 +54,7 @@ for ix, iy in np.ndindex(matrix.shape):
        point=(matrix[cords[0],cords[1]].decode('UTF-8'))
        if point.isnumeric():
           print(f"{point} - [{cords[0],cords[1]}]")
+          traverse(cords[0], cords[1])
 
 """
 for x in np.nditer(matrix, flags=['buffered'], op_dtypes=['S1']):
