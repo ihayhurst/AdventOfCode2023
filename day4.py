@@ -1,5 +1,6 @@
 """
 Advent of Code 2023 day 4
+Task 1: 17782 Time taken 2.02 ms
 """
 import time
 
