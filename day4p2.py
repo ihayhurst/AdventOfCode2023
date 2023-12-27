@@ -1,6 +1,6 @@
 """
 Advent of Code 2023 day 4
-Task 1 17782 Time Taken 2.27 ms
+Task 2 8477787 Time Taken 5.94ms
 """
 import time
 import numpy as np
