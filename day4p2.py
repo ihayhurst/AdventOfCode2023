@@ -5,10 +5,11 @@ Task 2 8477787 Time Taken 5.94ms
 import time
 import numpy as np
 
+INPUT_FILE="day4-input.txt"
+
 def main():
     start = time.time()
     sum = 0
-    INPUT_FILE="day4-input.txt"
     cards=parse_input(INPUT_FILE)
     structure=np.array(cards)
     structure = np.column_stack((structure, np.ones_like(structure)))

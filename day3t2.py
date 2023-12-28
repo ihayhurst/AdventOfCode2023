@@ -1,13 +1,8 @@
 """
-Done -load matrix into numpy array
-Done -scan array for symbols,
-Done -castabout for digits in ajacent cells
-Done -identify the number those digits are from
-        would be easier to find numbers the check they are valid by using the castabout to find symbols
-Done -sum the valid part numbers
-Done -fix getting part numbers you have already (but allowing genuine duplicate parts elsewhere)
-
-Task 2 Result 80403602 Time taken:38.56 ms
+Advent of Code Day 3  - Task 2
+Convert task 1 to only reguard "*" symbols
+where there are 2 ajacent part numbers, multiply them and return that as valid part for sum
+Task 2 Result 80403602 Time taken:27.08 ms
 """
 import numpy as np
 import time
@@ -63,7 +58,7 @@ def scan(x, y):
 for ix, iy in np.ndindex(matrix.shape):
     val = (matrix[ix, iy]).decode("UTF-8")
     if val in valid_symbols:
-        print(f"{val} - [{ix=}, {iy=}]")
+        #print(f"{val} - [{ix=}, {iy=}]")
         surround = castabout(ix, iy)
         numstart, numend = 0,0
         gears=[]
@@ -76,7 +71,7 @@ for ix, iy in np.ndindex(matrix.shape):
                 numend = scan(cords[0], numstart)
                 partrange = matrix[cords[0], numstart:numend]
                 partnumber = "".join([d.decode("UTF-8") for d in partrange])
-                print(int(partnumber))
+                #print(int(partnumber))
                 gears.append(int(partnumber))
         if len(gears) == 2:
             gearratio= np.prod(gears)
