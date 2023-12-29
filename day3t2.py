@@ -13,7 +13,7 @@ valid_symbols = "*"
 valid_parts = []
 
 
-def castabout(ix, iy):
+def castabout(ix: int, iy:int) ->int:
     adj = []
     for dx in range(-1, 2):
         for dy in range(-1, 2):
@@ -28,7 +28,7 @@ def castabout(ix, iy):
     return adj
 
 
-def traverse(x, y):
+def traverse(x: int, y: int) ->int:
     # Decrement y until cell value is not a digit (return index of digit range start)
     digit = True
     while digit:
@@ -42,7 +42,7 @@ def traverse(x, y):
     return numstart
 
 
-def scan(x, y):
+def scan(x: int, y:int) ->int:
     # Increment y until cell value is not a digit (return  index of digit end (+1) for easy ranges)
     digit = True
     while digit:
